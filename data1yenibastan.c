@@ -8,6 +8,20 @@ void calculate_column();
 void row_show();
 void column_show();
 
+struct Node {
+    int row;
+    int col;
+    int value;
+    struct Node * next;
+    struct Node * down;
+};
+
+#define NR 5
+#define NC 8
+struct Node * ArrayOfRows[NR] = {NULL};
+struct Node * ArrayOfColumns[NC] = {NULL};
+
+
 int row0 = 0;
 int row1 = 0;
 int row2 = 0;
@@ -24,13 +38,7 @@ int column6 = 0;
 int column7 = 0;
 
 
-struct Node {
-    int row;
-    int column;
-    int value;
-    struct Node * next;
-    struct Node * down;
-};
+
 
 struct Node *start=NULL;
 
@@ -50,7 +58,7 @@ void printList() {
 
     while (cur != NULL ) {
         printf("%d\t", cur->row);
-        printf("%d\t", cur->column);
+        printf("%d\t", cur->col);
         printf("%d\n", cur->value);
         cur=cur->next;
     }
@@ -76,14 +84,14 @@ void calculate_column() {
     if ( cur == NULL) { printf("empty");}
 
     while (cur != NULL ) {
-        if (cur->column == 0) { column0+=cur->value; }
-        if (cur->column == 1) { column1+=cur->value; }
-        if (cur->column == 2) { column2+=cur->value; }
-        if (cur->column == 3) { column3+=cur->value; }
-        if (cur->column == 4) { column4+=cur->value; }
-        if (cur->column == 5) { column5+=cur->value; }
-        if (cur->column == 6) { column6+=cur->value; }
-        if (cur->column == 7) { column7+=cur->value; }
+        if (cur->col == 0) { column0+=cur->value; }
+        if (cur->col == 1) { column1+=cur->value; }
+        if (cur->col == 2) { column2+=cur->value; }
+        if (cur->col == 3) { column3+=cur->value; }
+        if (cur->col == 4) { column4+=cur->value; }
+        if (cur->col == 5) { column5+=cur->value; }
+        if (cur->col == 6) { column6+=cur->value; }
+        if (cur->col == 7) { column7+=cur->value; }
 
         cur=cur->next;
     }
@@ -107,12 +115,13 @@ void readfile() {
         newp->row=data;
 
         fscanf(file, "%d", &data);
-        newp->column=data;
+        newp->col=data;
 
         fscanf(file ,"%d", &data);
         newp->value=data;
 
         newp->next=NULL;
+        newp->down=NULL;
 
         pre=NULL;
         cur=start;
@@ -139,10 +148,12 @@ void readfile() {
 }
 
 void row_show(){
-    printf( "%d , %d, %d, %d, %d", row0, row1, row2, row3, row4);
+    printf( " TOTALS OF ROWS: \n");
+    printf( " Row 0 : %d\n Row 1 : %d\n Row 2 : %d\n Row 3 : %d\n Row 4 : %d\n", row0, row1, row2, row3, row4);
 }
 
 void column_show(){
-    printf( "%d , %d, %d, %d, %d, %d, %d, %d", column0, column1, column2, column3, column4, column5,
+    printf( " TOTALS OF COLUMNS: \n");
+    printf( " Col 0 : %d\n Col 1 : %d\n Col 2 : %d\n Col 3 : %d\n Col 4 : %d\n Col 5 : %d\n Col 6 : %d\n Col 7 : %d\n", column0, column1, column2, column3, column4, column5,
            column6, column7);
 }
