@@ -2,7 +2,9 @@
 #include <stdlib.h>
 
 void printList();
-void add(int val);
+void add_row(int val);
+void add_column(int val);
+void add_value(int val);
 void readfile();
 
 int i=0;
@@ -24,14 +26,71 @@ int main() {
 
 }
 
-void add(int val) {
+void add_row(int val) {
     struct Node *newp;
     struct Node *pre;
     struct Node *cur;
 
     newp=malloc(sizeof(struct Node));
     newp->row=val;
+
+
+
+    newp->next=NULL;
+
+    pre=NULL;
+    cur=start;
+
+    while(cur != NULL) {
+        pre=cur;
+        cur=cur->next;
+    }
+
+    if (pre==NULL) {
+        newp->next=start;
+        start=newp;
+    }
+
+    else {
+        pre->next=newp;
+        newp->next=cur;
+    }
+}
+
+void add_column(int val) {
+    struct Node *newp;
+    struct Node *pre;
+    struct Node *cur;
+
+    newp=malloc(sizeof(struct Node));
     newp->column=val;
+    newp->next=NULL;
+
+    pre=NULL;
+    cur=start;
+
+    while(cur != NULL) {
+        pre=cur;
+        cur=cur->next;
+    }
+
+    if (pre==NULL) {
+        newp->next=start;
+        start=newp;
+    }
+
+    else {
+        pre->next=newp;
+        newp->next=cur;
+    }
+}
+
+void add_value(int val) {
+    struct Node *newp;
+    struct Node *pre;
+    struct Node *cur;
+
+    newp=malloc(sizeof(struct Node));
     newp->value=val;
     newp->next=NULL;
 
@@ -53,6 +112,7 @@ void add(int val) {
         newp->next=cur;
     }
 }
+
 
 void printList() {
     struct Node *cur = start;
@@ -76,13 +136,14 @@ void readfile() {
 
         fscanf(file ,"%d", &data);
 
-        if (i%3==0) {add(data);}
+        if (i%3==0) {add_row(data);}
 
-        //if (i%3==1) {add_column(data);}
+        if (i%3==1) {add_column(data);}
 
-        //if (i%3==2) {add_value(data);}
+        if (i%3==2) {add_value(data);}
 
         i=i+1;
+
     }
 
     fclose(file);
