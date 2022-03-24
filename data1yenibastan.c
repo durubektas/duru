@@ -3,6 +3,9 @@
 
 void printList();
 void add(int val);
+void readfile();
+
+int i=0;
 
 struct Node {
     int row;
@@ -15,8 +18,10 @@ struct Node {
 struct Node *start=NULL;
 
 int main() {
-    add(1);
+
+    readfile();
     printList();
+
 }
 
 void add(int val) {
@@ -59,4 +64,26 @@ void printList() {
         printf("%d\n", cur->value);
         cur=cur->next;
     }
+}
+
+void readfile() {
+    FILE *file;
+    int data;
+
+    file = fopen( "SPARSE.TXT", "r");
+
+    while ( !feof(file)) {
+
+        fscanf(file ,"%d", &data);
+
+        if (i%3==0) {add(data);}
+
+        //if (i%3==1) {add_column(data);}
+
+        //if (i%3==2) {add_value(data);}
+
+        i=i+1;
+    }
+
+    fclose(file);
 }
