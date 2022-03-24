@@ -3,6 +3,7 @@
 
 void printList();
 void readfile();
+void readfile2();
 void calculate_row();
 void calculate_column();
 void row_show();
@@ -37,9 +38,6 @@ int column5 = 0;
 int column6 = 0;
 int column7 = 0;
 
-
-
-
 struct Node *start=NULL;
 
 int main() {
@@ -47,6 +45,7 @@ int main() {
     readfile();
     calculate_row();
     row_show();
+
     calculate_column();
     column_show();
 
@@ -65,7 +64,7 @@ void printList() {
 }
 
 void calculate_row() {
-    struct Node *cur = start;
+    struct Node *cur = ArrayOfRows[NR];
     if ( cur == NULL) { printf("empty");}
 
     while (cur != NULL ) {
@@ -93,7 +92,7 @@ void calculate_column() {
         if (cur->col == 6) { column6+=cur->value; }
         if (cur->col == 7) { column7+=cur->value; }
 
-        cur=cur->next;
+        cur=cur->down;
     }
 }
 
@@ -124,7 +123,7 @@ void readfile() {
         newp->down=NULL;
 
         pre=NULL;
-        cur=start;
+        cur=ArrayOfRows[NR];
 
         while(cur != NULL) {
             pre=cur;
@@ -132,20 +131,67 @@ void readfile() {
         }
 
         if (pre==NULL) {
-            newp->next=start;
-            start=newp;
+            newp->next=ArrayOfRows[NR];
+            ArrayOfRows[NR]=newp;
         }
 
         else {
             pre->next=newp;
             newp->next=cur;
         }
-
-
     }
 
     fclose(file);
 }
+
+void readfile2() {
+    FILE *file;
+    int data;
+
+    file = fopen( "SPARSE.TXT", "r");
+
+    while ( !feof(file)) {
+
+        struct Node *newp;
+        struct Node *pre;
+        struct Node *cur;
+
+        newp=malloc(sizeof(struct Node));
+
+        fscanf(file ,"%d", &data);
+        newp->row=data;
+
+        fscanf(file, "%d", &data);
+        newp->col=data;
+
+        fscanf(file ,"%d", &data);
+        newp->value=data;
+
+        newp->next=NULL;
+        newp->down=NULL;
+
+        pre=NULL;
+        cur=start;
+
+        while(cur != NULL) {
+            pre=cur;
+            cur=cur->down;
+        }
+
+        if (pre==NULL) {
+            newp->down=start;
+            start=newp;
+        }
+
+        else {
+            pre->down=newp;
+            newp->down=cur;
+        }
+    }
+
+    fclose(file);
+}
+
 
 void row_show(){
     printf( " TOTALS OF ROWS: \n");
