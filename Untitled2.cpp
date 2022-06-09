@@ -66,8 +66,27 @@ int main() {
 			
 		}
 		
-	} 
+	}
 	
-	//pop all remained elements in the queue
+	printf("\nSIMULATION LOOP FINISHED. \n");
+	printf("REMOVING REST OF THE CUSTOMERS FROM QUEUE. \n");
+	
+	int sim_time=31;
+	
+	//remove all remained customers in the queue
+	while ( Q.size() != 0 ) {
+		
+		if ( ( Q.front().arrive_time + Q.front().service_duration ) <= sim_time ) {
+		
+		printf("TIME %d : Customer %d departed. Service duration : %d \n", sim_time, Q.front().customer_number, Q.front().service_duration);
+		
+		Q.pop(); 
+		
+		}
+		
+		sim_time++;
+	}
+	
+	printf("\nPROGRAM ENDED.\n");
 }
 
